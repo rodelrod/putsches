@@ -14,7 +14,7 @@ TEMPLATE_DEBUG = False#keep false when debugging jinja2 templates
 INTERNAL_IPS = ('127.0.0.1',)
 
 ADMINS = (
-    ('Your Name', 'your_email@domain.com'),
+    ('Rodrigo', 'rodelrod@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -201,9 +201,9 @@ AUTHENTICATION_BACKENDS = (
 )
 
 #logging settings
-LOG_FILENAME = 'askbot.log'
+# Log to stdout so that the logs are collected by heroku
 logging.basicConfig(
-    filename=os.path.join(os.path.dirname(__file__), 'log', LOG_FILENAME),
+    stream=sys.stdout,
     level=logging.CRITICAL,
     format='%(pathname)s TIME: %(asctime)s MSG: %(filename)s:%(funcName)s:%(lineno)d %(message)s',
 )
