@@ -19,16 +19,11 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'putsches',                      # Or path to database file if using sqlite3.
-        'USER': 'putsches',                      # Not used with sqlite3.
-        'PASSWORD': 'putsches',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
+# Parse database configuration from $DATABASE_URL
+# (locally, $DATABASE_URL is set at the virtualenv's postactivate hook)
+# (on production, $DATABASE_URL is set by Heroku)
+import dj_database_url
+DATABASES = {'default': dj_database_url.config()}
 
 #outgoing mail server settings
 SERVER_EMAIL = ''
