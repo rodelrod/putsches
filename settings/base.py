@@ -4,6 +4,7 @@ import logging
 import sys
 import askbot
 import site
+import os
 
 #this line is added so that we can import pre-packaged askbot dependencies
 ASKBOT_ROOT = os.path.abspath(os.path.dirname(askbot.__file__))
@@ -82,7 +83,8 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 # Make up some unique string, and don't share it with anybody.
-SECRET_KEY = '6623f34545f4c5f969c36c80702eb6a4'
+# Set SECRET_KEY in an environment value, not here.
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
