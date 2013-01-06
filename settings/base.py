@@ -5,12 +5,12 @@ import sys
 import askbot
 import site
 import os
+from path import path
 
 #this line is added so that we can import pre-packaged askbot dependencies
 ASKBOT_ROOT = os.path.abspath(os.path.dirname(askbot.__file__))
 site.addsitedir(os.path.join(ASKBOT_ROOT, 'deps'))
 
-DEBUG = True#set to True to enable debugging
 TEMPLATE_DEBUG = False#keep false when debugging jinja2 templates
 INTERNAL_IPS = ('127.0.0.1',)
 
@@ -59,7 +59,7 @@ IMAP_USE_TLS = False
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Paris'
 
 SITE_ID = 1
 
@@ -68,14 +68,15 @@ SITE_ID = 1
 USE_I18N = True
 LANGUAGE_CODE = 'en'
 
+PROJECT_ROOT = path(__file__).abspath().parent.parent
+
 # Absolute path to the directory that holds uploaded media
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'askbot', 'upfiles')
+MEDIA_ROOT = PROJECT_ROOT / 'askbot' / 'upfiles'
 MEDIA_URL = '/upfiles/'
 STATIC_URL = '/m/'#this must be different from MEDIA_URL
 
-PROJECT_ROOT = os.path.dirname(__file__)
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = PROJECT_ROOT / 'static'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -115,13 +116,11 @@ MIDDLEWARE_CLASSES = (
     'askbot.middleware.spaceless.SpacelessMiddleware',
 )
 
-
-ROOT_URLCONF = os.path.basename(os.path.dirname(__file__)) + '.urls'
-
+ROOT_URLCONF = PROJECT_ROOT.basename() + '.urls'
 
 #UPLOAD SETTINGS
 FILE_UPLOAD_TEMP_DIR = os.path.join(
-                                os.path.dirname(__file__), 
+                                PROJECT_ROOT, 
                                 'tmp'
                             ).replace('\\','/')
 
