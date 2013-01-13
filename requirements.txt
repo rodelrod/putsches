@@ -2,4 +2,3 @@
 psycopg2
 dj-database-url
 path.py
-requests
