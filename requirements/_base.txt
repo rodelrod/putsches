@@ -1,0 +1,6 @@
+# Extend askbot requirement with putsches-specific requirements that will be 
+# used in all deployments of putsches
+-r askbot_requirements.txt
+psycopg2
+dj-database-url
+path.py

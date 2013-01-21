@@ -6,6 +6,17 @@ import askbot
 import site
 import os
 from path import path
+from django.core.exceptions import ImproperlyConfigured
+
+# Warn if an essential environment value is not set
+# From "Two scoops of Django"
+def get_env_variable(var_name):
+    """Get the environment variable or raise exception"""
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the %s env variable" % var_name
+        raise ImproperlyConfigured(error_msg)
 
 #this line is added so that we can import pre-packaged askbot dependencies
 ASKBOT_ROOT = os.path.abspath(os.path.dirname(askbot.__file__))
@@ -85,7 +96,7 @@ ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 # Make up some unique string, and don't share it with anybody.
 # Set SECRET_KEY in an environment value, not here.
-SECRET_KEY = os.environ.get('SECRET_KEY', '')
+SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
