@@ -1,12 +1,11 @@
 ## Django settings for ASKBOT enabled project.
-import os.path
 import logging
 import sys
 import askbot
 import site
 import os
-from path import path
 from django.core.exceptions import ImproperlyConfigured
+from unipath import Path
 
 # Warn if an essential environment value is not set
 # From "Two scoops of Django"
@@ -19,8 +18,8 @@ def get_env_variable(var_name):
         raise ImproperlyConfigured(error_msg)
 
 #this line is added so that we can import pre-packaged askbot dependencies
-ASKBOT_ROOT = os.path.abspath(os.path.dirname(askbot.__file__))
-site.addsitedir(os.path.join(ASKBOT_ROOT, 'deps'))
+ASKBOT_ROOT = Path(askbot.__file__).parent
+site.addsitedir(ASKBOT_ROOT.child('deps'))
 
 TEMPLATE_DEBUG = False#keep false when debugging jinja2 templates
 INTERNAL_IPS = ('127.0.0.1',)
@@ -79,15 +78,15 @@ SITE_ID = 1
 USE_I18N = True
 LANGUAGE_CODE = 'en'
 
-PROJECT_ROOT = path(__file__).abspath().parent.parent
+PROJECT_ROOT = Path(__file__).ancestor(2)
 
 # Absolute path to the directory that holds uploaded media
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = PROJECT_ROOT / 'askbot' / 'upfiles'
+MEDIA_ROOT = PROJECT_ROOT.child('askbot').child('upfiles')
 MEDIA_URL = '/upfiles/'
 STATIC_URL = '/m/'#this must be different from MEDIA_URL
 
-STATIC_ROOT = PROJECT_ROOT / 'static'
+STATIC_ROOT = PROJECT_ROOT.child('static')
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -131,10 +130,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 #UPLOAD SETTINGS
-FILE_UPLOAD_TEMP_DIR = os.path.join(
-                                PROJECT_ROOT, 
-                                'tmp'
-                            ).replace('\\','/')
+FILE_UPLOAD_TEMP_DIR = PROJECT_ROOT.child('tmp')
 
 FILE_UPLOAD_HANDLERS = (
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
@@ -244,9 +240,9 @@ CSRF_COOKIE_NAME = '_csrf'
 #https://docs.djangoproject.com/en/1.3/ref/contrib/csrf/
 #CSRF_COOKIE_DOMAIN = DOMAIN_NAME
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
+STATIC_ROOT = PROJECT_ROOT.child("static")
 STATICFILES_DIRS = (
-    ('default/media', os.path.join(ASKBOT_ROOT, 'media')),
+    ('default/media', ASKBOT_ROOT.child('media')),
 )
 
 RECAPTCHA_USE_SSL = True
@@ -260,7 +256,7 @@ HAYSTACK_SEARCH_ENGINE = 'simple'
 
 TINYMCE_COMPRESSOR = True
 TINYMCE_SPELLCHECKER = False
-TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, 'default/media/js/tinymce/')
+TINYMCE_JS_ROOT = STATIC_ROOT.child('default').child('media').child('js').child('tinymce')
 TINYMCE_URL = STATIC_URL + 'default/media/js/tinymce/'
 TINYMCE_DEFAULT_CONFIG = {
     'plugins': 'askbot_imageuploader,askbot_attachment',
