@@ -127,7 +127,8 @@ MIDDLEWARE_CLASSES = (
     'askbot.middleware.spaceless.SpacelessMiddleware',
 )
 
-ROOT_URLCONF = PROJECT_ROOT.basename() + '.urls'
+#ROOT_URLCONF = PROJECT_ROOT.basename() + '.urls'
+ROOT_URLCONF = 'urls'
 
 #UPLOAD SETTINGS
 FILE_UPLOAD_TEMP_DIR = os.path.join(
