@@ -1,3 +1,6 @@
 -r _base.txt
 lettuce
 pylint
+pygments
+django-extensions
+Werkzeug
